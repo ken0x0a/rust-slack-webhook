@@ -1,17 +1,15 @@
-# rust-slack
-[![Travis Build Status](https://img.shields.io/travis/frostly/rust-slack.svg)](https://travis-ci.org/frostly/rust-slack)
-[![Documentation](https://img.shields.io/badge/docs-latest-C9893D.svg)](https://docs.rs/slack-hook/)
+# slack-hook2
 [![crates.io](https://img.shields.io/crates/v/slack-hook.svg)](https://crates.io/crates/slack-hook)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE-MIT)
 [![Apache licensed](https://img.shields.io/badge/license-Apache-blue.svg)](./LICENSE-APACHE)
 
-A rust crate for sending messages to Slack via webhooks.
+A rust crate for sending messages to Slack via webhooks. A modernized fork of the `slack-hook` crate. Happy to merge things back in the future.
 
 [Slack](https://slack.com/) is a messaging platform for team collaboration.
 
 Upgrading? See the [CHANGELOG](./CHANGELOG.md).
 
-Requires rust 1.17 or newer.
+Requires rust 1.35 or newer.
 
 # Usage
 
@@ -19,14 +17,13 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-slack-hook = "0.7"
+slack-hook2 = "0.8"
 ```
 
 Add the crate to your existing project:
 
 ```rust,no_run
-extern crate slack_hook;
-use slack_hook::{Slack, PayloadBuilder};
+use slack_hook2::{Slack, PayloadBuilder};
 
 fn main() {
     let slack = Slack::new("https://hooks.slack.com/services/abc/123/45z").unwrap();
