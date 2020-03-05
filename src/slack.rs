@@ -1,5 +1,5 @@
 use chrono::NaiveDateTime;
-use crate::error::Result;
+use crate::error::{SlackError, Result};
 use reqwest::Client;
 use url::Url;
 use serde::{Serialize, Serializer};
@@ -17,19 +17,20 @@ impl Slack {
     /// Construct a new instance of slack for a specific incoming url endpoint.
     pub fn new<U: reqwest::IntoUrl>(hook: U) -> Result<Slack> {
         Ok(Slack {
-            hook: hook.into_url()?,
+            hook: hook.into_url().map_err(|e| SlackError::Http(format!("failed to convert to reqwest::url: {}", e)))?,
             client: Client::new(),
         })
     }
 
     /// Send payload to slack service
     pub async fn send(&self, payload: &Payload) -> Result<()> {
-        let response = self.client.post(self.hook.clone()).json(payload).send().await?;
+        let response = self.client.post(self.hook.clone()).json(payload).send().await
+            .map_err(|e| SlackError::Http(format!("HTTP send error to {}: {}", self.hook, e)))?;
 
         if response.status().is_success(){
             Ok(())
         } else {
-            Err(format_err!("HTTP error {}", response.status()))
+            Err(SlackError::Http(format!("HTTP error {}", response.status())))
         }
     }
 }

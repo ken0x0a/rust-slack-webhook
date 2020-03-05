@@ -6,14 +6,13 @@
 //! supports entire messaging API, including attachments and fields
 //! also support for built-in colors as well as any hex colors
 
-#[macro_use] extern crate failure;
 #[macro_use] extern crate serde_derive;
 
 pub use slack::{Slack, SlackLink, SlackUserLink, SlackText, SlackTextContent, SlackTime};
 pub use payload::{Parse, Payload, PayloadBuilder};
 pub use attachment::{Attachment, AttachmentBuilder, Field, Section, Action};
 pub use crate::hex::{HexColor, SlackColor};
-pub use error::{Error, Result};
+pub use error::{SlackError, Result};
 
 #[macro_use] mod macros;
 mod helper;

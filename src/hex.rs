@@ -1,4 +1,4 @@
-use crate::error::Result;
+use crate::error::{SlackError, Result};
 
 
 /// A `HexColor` `String` can be one of:
@@ -81,14 +81,14 @@ impl HexColor {
 
         let num_chars = s.chars().count();
         if num_chars != 7 && num_chars != 4 {
-            return Err(format_err!(
+            return Err(SlackError::HexColor(format!(
                 "Must be 4 or 7 characters long (including #): \
                  found `{}`",
                 s
-            ));
+            )));
         }
         if !s.starts_with('#') {
-            return Err(format_err!("No leading #: found `{}`", s));
+            return Err(SlackError::HexColor(format!("No leading #: found `{}`", s)));
         }
 
         // #d18 -> #dd1188
@@ -105,7 +105,7 @@ impl HexColor {
         // see if the remaining part of the string is actually hex
         match hex::decode(&hex[1..]) {
             Ok(_) => Ok(HexColor::new(s)),
-            Err(e) => Err(e.into()),
+            Err(e) => Err(SlackError::HexColor(e.to_string())),
         }
     }
 }
@@ -120,7 +120,7 @@ mod test {
         let err = HexColor::new_checked("abc").unwrap_err();
         assert_eq!(
             err.to_string(),
-            "Must be 4 or 7 characters long (including #): found `abc`"
+            "hex color parsing error: Must be 4 or 7 characters long (including #): found `abc`"
         );
     }
 
@@ -129,7 +129,7 @@ mod test {
         let err = HexColor::new_checked("1234567").unwrap_err();
         assert_eq!(
             err.to_string(),
-            "No leading #: found `1234567`"
+            "hex color parsing error: No leading #: found `1234567`"
         )
     }
 

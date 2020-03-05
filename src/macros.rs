@@ -6,6 +6,7 @@ macro_rules! url_builder_fn {
     } => {
         $(#[$meta])+
         pub fn $name(self, $name: &str) -> $builder {
+            use crate::error::SlackError;
             match self.inner {
                 Ok(mut inner) => {
                     match Url::parse($name) {
@@ -13,7 +14,7 @@ macro_rules! url_builder_fn {
                             inner.$name = Some(url);
                             $builder { inner: Ok(inner) }
                         }
-                        Err(e) => $builder { inner: Err(e.into()) },
+                        Err(e) => $builder { inner: Err(SlackError::Url(e.into())) },
                     }
                 }
                 _ => self,
