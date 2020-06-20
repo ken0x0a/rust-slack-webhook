@@ -1,5 +1,5 @@
 use crate::error::{SlackError, Result};
-
+use serde::Serialize;
 
 /// A `HexColor` `String` can be one of:
 ///
