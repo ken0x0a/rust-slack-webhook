@@ -1,0 +1,19 @@
+# https://github.com/rust-lang/rustfmt/blob/master/Configurations.md
+enum_discrim_align_threshold = 20
+struct_field_align_threshold = 20
+inline_attribute_width = 50
+max_width = 100
+merge_imports = true
+newline_style = "Unix"
+normalize_comments = true
+normalize_doc_attributes = true
+space_after_colon = true
+spaces_around_ranges = true
+tab_spaces = 2
+use_try_shorthand = true
+force_explicit_abi = true
+comment_width = 120
+wrap_comments = true
+error_on_line_overflow = false
+use_field_init_shorthand = true
+condense_wildcard_suffixes = true
