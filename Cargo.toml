@@ -27,6 +27,6 @@ default-features = false
 features = ["json"]
 
 [features]
-default = ["native-tls"]
+default = ["rustls-tls"]
 native-tls = ["reqwest/native-tls"]
 rustls-tls = ["reqwest/rustls-tls"]
