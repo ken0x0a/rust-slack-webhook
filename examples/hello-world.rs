@@ -1,4 +1,4 @@
-use slack_hook2::{PayloadBuilder, Slack};
+use slack_webook::{PayloadBuilder, Slack};
 
 #[tokio::main]
 async fn main() {
